@@ -1,7 +1,7 @@
+import { Text, View } from 'react-native';
 import { Link, Stack } from 'expo-router';
 import { StyleSheet } from 'react-native';
-
-import { Text, View } from '../components/Themed';
+import { StatusBar } from 'expo-status-bar';
 
 export default function NotFoundScreen() {
   return (
@@ -14,6 +14,8 @@ export default function NotFoundScreen() {
           <Text style={styles.linkText}>Go to home screen!</Text>
         </Link>
       </View>
+
+      <StatusBar style={'dark'} />
     </>
   );
 }

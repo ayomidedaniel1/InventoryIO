@@ -1,14 +1,17 @@
+import { Link } from "expo-router";
 import { StatusBar } from "expo-status-bar";
-import { Text, View, Platform, StyleSheet } from "react-native";
+import { Text, View, StyleSheet } from "react-native";
 
-const HomeScreen = () => {
+const HomeScreen: React.FC = () => {
   return (
     <View style={styles.container}>
       <Text>
-        Login Screen
+        Home Screen
       </Text>
 
-      <StatusBar style={Platform.OS === 'ios' ? 'light' : 'auto'} />
+      <Link href='/login'>Go to Login screen</Link>
+
+      <StatusBar style={'dark'} />
     </View>
   );
 };
@@ -18,7 +21,10 @@ export default HomeScreen;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: '#fff',
+    flexDirection: 'column',
     alignItems: 'center',
-    justifyContent: 'center',
+    paddingHorizontal: 20,
+    paddingTop: 50,
   },
 });

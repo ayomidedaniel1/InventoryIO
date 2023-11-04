@@ -1,11 +1,11 @@
 import { StatusBar } from "expo-status-bar";
 import { Text, View, StyleSheet } from "react-native";
 
-const CreateInventoryScreen: React.FC = () => {
+const EditInventoryScreen: React.FC = () => {
   return (
     <View style={styles.container}>
       <Text>
-        Create Inventory Screen
+        Edit Inventory Screen
       </Text>
 
       <StatusBar style={'dark'} />
@@ -13,7 +13,7 @@ const CreateInventoryScreen: React.FC = () => {
   );
 };
 
-export default CreateInventoryScreen;
+export default EditInventoryScreen;
 
 const styles = StyleSheet.create({
   container: {
