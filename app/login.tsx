@@ -1,10 +1,10 @@
+import { AntDesign, FontAwesome } from "@expo/vector-icons";
 import Checkbox from 'expo-checkbox';
 import { Image } from "expo-image";
-import { StatusBar } from "expo-status-bar";
-import { Text, View, StyleSheet, TextInput, Pressable, TouchableOpacity } from "react-native";
-import { AntDesign, FontAwesome } from "@expo/vector-icons";
-import { useState } from "react";
 import { Link } from 'expo-router';
+import { StatusBar } from "expo-status-bar";
+import { useState } from "react";
+import { Pressable, StyleSheet, Text, TextInput, TouchableOpacity, View, } from "react-native";
 
 const LoginScreen: React.FC = () => {
   const [email, setEmail] = useState<string>("");
@@ -68,7 +68,7 @@ const LoginScreen: React.FC = () => {
           </Pressable>
         </View>
 
-        <View style={styles.remember}>
+        <TouchableOpacity style={styles.remember} onPress={() => setChecked(!isChecked)} activeOpacity={0.8}>
           <Checkbox
             style={styles.checkbox}
             value={isChecked}
@@ -77,7 +77,7 @@ const LoginScreen: React.FC = () => {
           />
 
           <Text style={styles.rememberPassword}>Remember Password</Text>
-        </View>
+        </TouchableOpacity>
 
         <Link href={"/"} asChild>
           <TouchableOpacity style={styles.login} activeOpacity={0.7}>
@@ -147,6 +147,7 @@ const styles = StyleSheet.create({
     color: '#000',
     fontSize: 15,
     width: '100%',
+    height: '100%',
   },
   remember: {
     flexDirection: 'row',

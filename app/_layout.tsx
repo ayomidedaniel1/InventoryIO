@@ -43,9 +43,9 @@ function RootLayoutNav() {
   return (
     <Stack>
       <Stack.Screen name="index" options={{ presentation: 'card', headerShown: false }} />
-      <Stack.Screen name="login" options={{ presentation: 'modal', headerShown: false }} />
-      <Stack.Screen name="createInventory" options={{ presentation: 'modal', headerShown: false }} />
-      <Stack.Screen name="editInventory" options={{ presentation: 'modal', headerShown: false }} />
+      <Stack.Screen name="login" options={{ presentation: 'modal', title: '', headerShadowVisible: false, }} />
+      <Stack.Screen name="createInventory" options={{ presentation: 'modal', title: '', headerShadowVisible: false, }} />
+      <Stack.Screen name="editInventory" options={{ presentation: 'modal', title: '', headerShadowVisible: false, }} />
     </Stack>
   );
 }
