@@ -9,11 +9,12 @@ import React, {
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 type User = {
-  username: string;
+  email: string;
 };
 
 type AuthContextType = {
   user: User | null;
+  isLoggedIn: boolean;
   loading: boolean;
   login: (user: User) => void;
   logout: () => void;
@@ -27,14 +28,18 @@ export const authContext = createContext<AuthContextType | null>(null);
 
 export const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
   const [user, setUser] = useState<User | null>(null);
-  const [loading, setLoading] = useState<boolean>(true);
+  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(false);
 
   useEffect(() => {
     const checkUser = async () => {
+      setLoading(true);
       try {
+        const isUserLoggedIn = await AsyncStorage.getItem('isLoggedIn');
         const storedUser = await AsyncStorage.getItem('user');
 
-        if (storedUser) {
+        if (isUserLoggedIn !== null && storedUser) {
+          setIsLoggedIn(true);
           setUser(JSON.parse(storedUser));
         }
       } catch (error) {
@@ -48,18 +53,23 @@ export const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
   }, []);
 
   const login = (newUser: User) => {
-    setUser(newUser);
+    AsyncStorage.setItem("isLoggedIn", 'true');
     AsyncStorage.setItem("user", JSON.stringify(newUser));
+    setIsLoggedIn(true);
+    setUser(newUser);
   };
 
   const logout = () => {
     setUser(null);
+    AsyncStorage.removeItem("isLoggedIn");
     AsyncStorage.removeItem("user");
+    setIsLoggedIn(false);
   };
 
   const contextValue: AuthContextType = {
     user,
     loading,
+    isLoggedIn,
     login,
     logout,
   };
