@@ -24,7 +24,13 @@ type AuthProviderProps = {
   children: ReactNode;
 };
 
-export const authContext = createContext<AuthContextType | null>(null);
+export const authContext = createContext<AuthContextType | null>({
+  user: null,
+  isLoggedIn: false,
+  loading: false,
+  login: () => { },
+  logout: () => { },
+});
 
 export const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
   const [user, setUser] = useState<User | null>(null);
@@ -80,3 +86,7 @@ export const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
     </authContext.Provider>
   );
 };
+
+export function useAuthContext(): AuthContextType {
+  return useContext(authContext) as AuthContextType;
+}
