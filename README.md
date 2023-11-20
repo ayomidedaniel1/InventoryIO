@@ -4,7 +4,7 @@ Mobile app built with React Native expo and uses Context Api for state managemen
 
 InventoryIO is a mobile app that allows users to list, add, edit, and delete inventory items.
 
-## Test locally
+## Run locally
 
 To install all dependencies, you need to run the following command:
 
