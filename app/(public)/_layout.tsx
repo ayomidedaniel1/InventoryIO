@@ -1,19 +1,64 @@
-import React from 'react';
-import { Stack } from 'expo-router';
+import { Tabs } from 'expo-router';
+import { Ionicons } from '@expo/vector-icons';
+import { Pressable } from 'react-native';
+import { useAuthContext } from '../../contexts/authContext';
 
-const PublicLayout = () => {
+export const LogoutButton = () => {
+  const { logout } = useAuthContext();
+
+  const doLogout = () => {
+    logout();
+  };
+
   return (
-    <Stack
+    <Pressable onPress={doLogout} style={{ marginRight: 10 }}>
+      <Ionicons name="log-out-outline" size={24} color={'#000'} />
+    </Pressable>
+  );
+};
+
+const TabsPage = () => {
+  const { isLoggedIn } = useAuthContext();
+
+  return (
+    <Tabs
       screenOptions={{
         headerStyle: {
           backgroundColor: '#6c47ff',
         },
         headerTintColor: '#fff',
-        headerBackTitle: 'Back',
       }}>
-      <Stack.Screen name="login" options={{ headerTitle: 'Login', }} />
-    </Stack>
+      <Tabs.Screen
+        name="home"
+        options={{
+          headerTitle: 'Home',
+          tabBarIcon: ({ color, size }) => <Ionicons name="home-outline" size={size} color={color} />,
+          tabBarLabel: 'Home',
+        }}
+        redirect={!isLoggedIn}
+      />
+      <Tabs.Screen
+        name="editInventory"
+        options={{
+          headerTitle: 'Edit inventory',
+          tabBarIcon: ({ color, size }) => <Ionicons name="person-outline" size={size} color={color} />,
+          tabBarLabel: 'My Profile',
+          headerRight: () => <LogoutButton />,
+        }}
+        redirect={!isLoggedIn}
+      />
+      <Tabs.Screen
+        name="createInventory"
+        options={{
+          headerTitle: 'Create inventory',
+          tabBarIcon: ({ color, size }) => <Ionicons name="person-outline" size={size} color={color} />,
+          tabBarLabel: 'My Profile',
+          headerRight: () => <LogoutButton />,
+        }}
+        redirect={!isLoggedIn}
+      />
+    </Tabs>
   );
 };
 
-export default PublicLayout;
+export default TabsPage;
