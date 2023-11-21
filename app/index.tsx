@@ -6,13 +6,7 @@ import { View, Text } from 'react-native';
 import { Apploader } from "../components/AppLoader";
 
 const Index = () => {
-  const authContext = useAuthContext();
-
-  if (!authContext) {
-    return <Apploader />;
-  }
-
-  const { loading, isLoggedIn } = authContext;
+  const { loading, isLoggedIn } = useAuthContext();
   const segments = useSegments();
   const router = useRouter();
   const navigationState = useRootNavigationState();

@@ -13,6 +13,7 @@ import {
   EncodeSansSemiCondensed_900Black,
   useFonts,
 } from '@expo-google-fonts/encode-sans-semi-condensed';
+import { AuthProvider } from "../contexts/authContext";
 
 export default function Layout() {
 
@@ -43,6 +44,8 @@ export default function Layout() {
   }
 
   return (
-    <Stack screenOptions={{ headerShown: false }} />
+    <AuthProvider>
+      <Stack screenOptions={{ headerShown: false }} />
+    </AuthProvider>
   );
 }
