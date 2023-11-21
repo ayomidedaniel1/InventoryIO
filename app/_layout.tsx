@@ -1,34 +1,48 @@
-import FontAwesome from '@expo/vector-icons/FontAwesome';
-import { useFonts } from 'expo-font';
-import { Slot, SplashScreen, useSegments, useRouter } from 'expo-router';
+import { SplashScreen, Stack } from "expo-router";
 import { useEffect } from 'react';
 
-import { useAuthContext } from '../contexts/authContext';
+import {
+  EncodeSansSemiCondensed_100Thin,
+  EncodeSansSemiCondensed_200ExtraLight,
+  EncodeSansSemiCondensed_300Light,
+  EncodeSansSemiCondensed_400Regular,
+  EncodeSansSemiCondensed_500Medium,
+  EncodeSansSemiCondensed_600SemiBold,
+  EncodeSansSemiCondensed_700Bold,
+  EncodeSansSemiCondensed_800ExtraBold,
+  EncodeSansSemiCondensed_900Black,
+  useFonts,
+} from '@expo-google-fonts/encode-sans-semi-condensed';
 
-SplashScreen.preventAutoHideAsync();
+export default function Layout() {
 
-const InitialLayout = () => {
-  const { loading, isLoggedIn, } = useAuthContext();
-  const segments = useSegments();
-  const router = useRouter();
+  const [loaded, error] = useFonts({
+    EncodeSansSemiCondensed_100Thin,
+    EncodeSansSemiCondensed_200ExtraLight,
+    EncodeSansSemiCondensed_300Light,
+    EncodeSansSemiCondensed_400Regular,
+    EncodeSansSemiCondensed_500Medium,
+    EncodeSansSemiCondensed_600SemiBold,
+    EncodeSansSemiCondensed_700Bold,
+    EncodeSansSemiCondensed_800ExtraBold,
+    EncodeSansSemiCondensed_900Black,
+  });
 
   useEffect(() => {
-    if (!isLoggedIn) return;
+    if (error) throw error;
+  }, [error]);
 
-    const inTabsGroup = segments[0] === '(auth)';
-
-    console.log('User changed: ', isLoggedIn);
-
-    if (isLoggedIn && !inTabsGroup) {
-      router.replace('/home');
-    } else if (!isLoggedIn) {
-      router.replace('/login');
+  useEffect(() => {
+    if (loaded) {
+      SplashScreen.hideAsync();
     }
-  }, [isLoggedIn]);
+  }, [loaded]);
 
-  return <Slot />;
-};
+  if (!loaded) {
+    return null;
+  }
 
-export const RootLayout = () => {
-  return <InitialLayout />;
-};
+  return (
+    <Stack screenOptions={{ headerShown: false }} />
+  );
+}

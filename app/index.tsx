@@ -1,11 +1,27 @@
-import { ActivityIndicator, View } from 'react-native';
+import { useEffect } from "react";
+import { useRootNavigationState } from "expo-router";
+import { useRouter, useSegments } from "expo-router";
+import { useAuthContext } from "../contexts/authContext";
+import { View, Text } from 'react-native';
+import { Apploader } from "../components/AppLoader";
 
-const StartPage = () => {
+const Index = () => {
+  const authContext = useAuthContext();
+
+  if (!authContext) {
+    return <Apploader />;
+  }
+
+  const { loading, isLoggedIn } = authContext;
+  const segments = useSegments();
+  const router = useRouter();
+  const navigationState = useRootNavigationState();
+
   return (
     <View style={{ flex: 1, justifyContent: 'center' }}>
-      <ActivityIndicator size="large" color="#0000ff" />
+      <Text>Hello</Text>
     </View>
   );
 };
 
-export default StartPage;
+export default Index;

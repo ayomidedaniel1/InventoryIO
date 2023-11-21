@@ -34,25 +34,25 @@ export const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
   const [loading, setLoading] = useState<boolean>(false);
 
   useEffect(() => {
-    const checkUser = async () => {
-      setLoading(true);
-      try {
-        const isUserLoggedIn = await AsyncStorage.getItem('isLoggedIn');
-        const storedUser = await AsyncStorage.getItem('user');
-
-        if (isUserLoggedIn !== null && storedUser) {
-          setIsLoggedIn(true);
-          setUser(JSON.parse(storedUser));
-        }
-      } catch (error) {
-        console.error("Error retrieving user ", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
     checkUser();
   }, []);
+
+  const checkUser = async () => {
+    setLoading(true);
+    try {
+      const isUserLoggedIn = await AsyncStorage.getItem('isLoggedIn');
+      const storedUser = await AsyncStorage.getItem('user');
+
+      if (isUserLoggedIn !== null && storedUser) {
+        setIsLoggedIn(true);
+        setUser(JSON.parse(storedUser));
+      }
+    } catch (error) {
+      console.error("Error retrieving user ", error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const login = (newUser: User) => {
     AsyncStorage.setItem("isLoggedIn", 'true');

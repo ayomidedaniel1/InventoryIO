@@ -21,7 +21,7 @@ const LoginScreen: React.FC = () => {
 
       <Image
         style={styles.image}
-        source={require('../assets/images/img/login.png')}
+        source={require('../../assets/images/img/login.png')}
         contentFit="cover"
         transition={1000}
       />
