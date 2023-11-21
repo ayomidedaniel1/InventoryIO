@@ -45,14 +45,7 @@ export default function Layout() {
 
   return (
     <AuthProvider>
-      <Stack screenOptions={{
-        headerStyle: {
-          backgroundColor: '#6c47ff',
-        },
-        headerTitle: 'Login',
-        headerTintColor: '#fff',
-        headerBackTitle: 'Back',
-      }} />
+      <Stack screenOptions={{ headerStyle: { backgroundColor: '#6c47ff', }, headerTitle: '', }} />
     </AuthProvider>
   );
 }
