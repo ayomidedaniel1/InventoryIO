@@ -1,12 +1,12 @@
 import { AntDesign, FontAwesome } from "@expo/vector-icons";
-import Checkbox from 'expo-checkbox';
 import { Image } from "expo-image";
 import { useRouter } from 'expo-router';
 import { StatusBar } from "expo-status-bar";
 import { useState } from "react";
-import { Pressable, StyleSheet, Text, TextInput, TouchableOpacity, View, } from "react-native";
+import { Pressable, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
 import Toast from "react-native-root-toast";
 import { User, useAuthContext } from "../../contexts/authContext";
+import TopHeader from "../../components/TopHeader";
 
 const LoginScreen: React.FC = () => {
   const { login } = useAuthContext();
@@ -14,28 +14,21 @@ const LoginScreen: React.FC = () => {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string | number>();
   const [hidePassword, setHidePassword] = useState<boolean>(true);
-  const [isChecked, setChecked] = useState<boolean>(false);
 
   const [emailSet, setEmailSet] = useState<boolean>(false);
-  const [passwordSet, setPasswordSet] = useState<boolean>(false);
 
   const handleLogin = () => {
     const user: User = { email };
-    if (email.includes('@')) {
+    if (email.includes('@') && password) {
       setEmailSet(true);
     } else {
-      Toast.show('Input a correct email');
-    }
-    if (password) {
-      setPasswordSet(true);
-    } else {
-      Toast.show('Input your password');
+      Toast.show('Something went wrong');
     }
 
-    if (emailSet && passwordSet) {
-      console.log(user);
+    if (emailSet) {
+      Toast.show('Login successful');
       login(user);
-      router.push('/');
+      router.push('/(public)/home');
     }
   };
 
@@ -45,6 +38,7 @@ const LoginScreen: React.FC = () => {
 
   return (
     <View style={styles.container}>
+      <TopHeader />
 
       <Image
         style={styles.image}
@@ -79,7 +73,7 @@ const LoginScreen: React.FC = () => {
 
         <View style={styles.textInput}>
           <TextInput
-            placeholder="Email Address"
+            placeholder="Password"
             placeholderTextColor={'#C4C4C4'}
             style={styles.input}
             keyboardType="default"
@@ -95,23 +89,12 @@ const LoginScreen: React.FC = () => {
           </Pressable>
         </View>
 
-        <TouchableOpacity style={styles.remember} onPress={() => setChecked(!isChecked)} activeOpacity={0.8}>
-          <Checkbox
-            style={styles.checkbox}
-            value={isChecked}
-            onValueChange={setChecked}
-            color={isChecked ? '#4630EB' : undefined}
-          />
-
-          <Text style={styles.rememberPassword}>Remember Password</Text>
-        </TouchableOpacity>
-
         <TouchableOpacity style={styles.login} activeOpacity={0.7} onPress={handleLogin}>
           <Text style={styles.textLogin}>Login</Text>
         </TouchableOpacity>
       </View>
 
-      <StatusBar style={'dark'} />
+      <StatusBar style={'auto'} backgroundColor='#6c47ff' />
     </View>
   );
 };

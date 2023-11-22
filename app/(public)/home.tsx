@@ -1,17 +1,18 @@
 import { Link } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import { Text, View, StyleSheet } from "react-native";
+import TopHeader from "../../components/TopHeader";
 
 const HomeScreen: React.FC = () => {
   return (
     <View style={styles.container}>
+      <TopHeader />
+
       <Text>
         Home Screen
       </Text>
 
-      <Link href='/login'>Go to Login screen</Link>
-
-      <StatusBar style={'dark'} />
+      <StatusBar style={'auto'} backgroundColor='#6c47ff' />
     </View>
   );
 };

@@ -1,4 +1,4 @@
-import { Tabs } from 'expo-router';
+import { Stack } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import { Pressable } from 'react-native';
 import { useAuthContext } from '../../contexts/authContext';
@@ -21,43 +21,11 @@ const TabsPage = () => {
   const { isLoggedIn } = useAuthContext();
 
   return (
-    <Tabs
-      screenOptions={{
-        headerStyle: {
-          backgroundColor: '#6c47ff',
-        },
-        headerTintColor: '#fff',
-      }}>
-      <Tabs.Screen
-        name="home"
-        options={{
-          headerTitle: 'Home',
-          tabBarIcon: ({ color, size }) => <Ionicons name="home-outline" size={size} color={color} />,
-          tabBarLabel: 'Home',
-        }}
-        redirect={!isLoggedIn}
-      />
-      <Tabs.Screen
-        name="editInventory"
-        options={{
-          headerTitle: 'Edit inventory',
-          tabBarIcon: ({ color, size }) => <Ionicons name="person-outline" size={size} color={color} />,
-          tabBarLabel: 'My Profile',
-          headerRight: () => <LogoutButton />,
-        }}
-        redirect={!isLoggedIn}
-      />
-      <Tabs.Screen
-        name="createInventory"
-        options={{
-          headerTitle: 'Create inventory',
-          tabBarIcon: ({ color, size }) => <Ionicons name="person-outline" size={size} color={color} />,
-          tabBarLabel: 'My Profile',
-          headerRight: () => <LogoutButton />,
-        }}
-        redirect={!isLoggedIn}
-      />
-    </Tabs>
+    <Stack screenOptions={{ headerShown: false, }}>
+      <Stack.Screen name="home" options={{ headerRight: () => <LogoutButton />, }} redirect={!isLoggedIn} />
+      <Stack.Screen name="createInventory" options={{ headerRight: () => <LogoutButton />, }} redirect={!isLoggedIn} />
+      <Stack.Screen name="editInventory" redirect={!isLoggedIn} />
+    </Stack>
   );
 };
 

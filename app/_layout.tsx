@@ -1,6 +1,3 @@
-import { SplashScreen, Stack } from "expo-router";
-import { useEffect } from 'react';
-
 import {
   EncodeSansSemiCondensed_100Thin,
   EncodeSansSemiCondensed_200ExtraLight,
@@ -13,8 +10,11 @@ import {
   EncodeSansSemiCondensed_900Black,
   useFonts,
 } from '@expo-google-fonts/encode-sans-semi-condensed';
-import { AuthProvider } from "../contexts/authContext";
+import { SplashScreen, Stack } from "expo-router";
+import { useEffect } from 'react';
+
 import { RootSiblingParent } from "react-native-root-siblings";
+import { AuthProvider } from "../contexts/authContext";
 
 export default function Layout() {
 
@@ -47,7 +47,7 @@ export default function Layout() {
   return (
     <RootSiblingParent>
       <AuthProvider>
-        <Stack screenOptions={{ headerStyle: { backgroundColor: '#6c47ff', }, headerTitle: '', }} />
+        <Stack screenOptions={{ headerShown: false }} />
       </AuthProvider>
     </RootSiblingParent>
   );
