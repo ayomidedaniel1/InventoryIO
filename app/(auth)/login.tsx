@@ -1,16 +1,43 @@
 import { AntDesign, FontAwesome } from "@expo/vector-icons";
 import Checkbox from 'expo-checkbox';
 import { Image } from "expo-image";
-import { Link } from 'expo-router';
+import { useRouter } from 'expo-router';
 import { StatusBar } from "expo-status-bar";
 import { useState } from "react";
 import { Pressable, StyleSheet, Text, TextInput, TouchableOpacity, View, } from "react-native";
+import Toast from "react-native-root-toast";
+import { User, useAuthContext } from "../../contexts/authContext";
 
 const LoginScreen: React.FC = () => {
+  const { login } = useAuthContext();
+  const router = useRouter();
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string | number>();
   const [hidePassword, setHidePassword] = useState<boolean>(true);
   const [isChecked, setChecked] = useState<boolean>(false);
+
+  const [emailSet, setEmailSet] = useState<boolean>(false);
+  const [passwordSet, setPasswordSet] = useState<boolean>(false);
+
+  const handleLogin = () => {
+    const user: User = { email };
+    if (email.includes('@')) {
+      setEmailSet(true);
+    } else {
+      Toast.show('Input a correct email');
+    }
+    if (password) {
+      setPasswordSet(true);
+    } else {
+      Toast.show('Input your password');
+    }
+
+    if (emailSet && passwordSet) {
+      console.log(user);
+      login(user);
+      router.push('/');
+    }
+  };
 
   const managePasswordVisibility = () => {
     setHidePassword(!hidePassword);
@@ -79,10 +106,9 @@ const LoginScreen: React.FC = () => {
           <Text style={styles.rememberPassword}>Remember Password</Text>
         </TouchableOpacity>
 
-        <Link href={"/"} asChild>
-          <TouchableOpacity style={styles.login} activeOpacity={0.7}>
-            <Text style={styles.textLogin}>Login</Text>
-          </TouchableOpacity></Link>
+        <TouchableOpacity style={styles.login} activeOpacity={0.7} onPress={handleLogin}>
+          <Text style={styles.textLogin}>Login</Text>
+        </TouchableOpacity>
       </View>
 
       <StatusBar style={'dark'} />

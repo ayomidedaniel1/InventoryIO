@@ -14,6 +14,7 @@ import {
   useFonts,
 } from '@expo-google-fonts/encode-sans-semi-condensed';
 import { AuthProvider } from "../contexts/authContext";
+import { RootSiblingParent } from "react-native-root-siblings";
 
 export default function Layout() {
 
@@ -44,8 +45,10 @@ export default function Layout() {
   }
 
   return (
-    <AuthProvider>
-      <Stack screenOptions={{ headerStyle: { backgroundColor: '#6c47ff', }, headerTitle: '', }} />
-    </AuthProvider>
+    <RootSiblingParent>
+      <AuthProvider>
+        <Stack screenOptions={{ headerStyle: { backgroundColor: '#6c47ff', }, headerTitle: '', }} />
+      </AuthProvider>
+    </RootSiblingParent>
   );
 }
