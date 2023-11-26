@@ -15,6 +15,7 @@ import { useEffect } from 'react';
 
 import { RootSiblingParent } from "react-native-root-siblings";
 import { AuthProvider } from "../contexts/authContext";
+import { InventoryProvider } from '../contexts/inventoryContext';
 
 export default function Layout() {
 
@@ -47,7 +48,9 @@ export default function Layout() {
   return (
     <RootSiblingParent>
       <AuthProvider>
-        <Stack screenOptions={{ headerShown: false }} />
+        <InventoryProvider>
+          <Stack screenOptions={{ headerShown: false }} />
+        </InventoryProvider>
       </AuthProvider>
     </RootSiblingParent>
   );

@@ -4,7 +4,7 @@ import { useRouter } from 'expo-router';
 import { StatusBar } from "expo-status-bar";
 import { useState } from "react";
 import { Pressable, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
-import Toast from "react-native-root-toast";
+import Toast from 'react-native-root-toast';
 import { User, useAuthContext } from "../../contexts/authContext";
 import TopHeader from "../../components/TopHeader";
 
@@ -51,7 +51,7 @@ const LoginScreen: React.FC = () => {
         <Text style={styles.welcome}>Welcome</Text>
 
         <Text style={styles.welcomeDetails}>
-          By signing in you are agreeing our
+          By signing in you agree to our
         </Text>
 
         <Text style={styles.welcomeTerms}>
