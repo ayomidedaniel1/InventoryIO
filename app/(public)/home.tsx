@@ -1,16 +1,40 @@
-import { Link } from "expo-router";
+import { Image } from "expo-image";
 import { StatusBar } from "expo-status-bar";
-import { Text, View, StyleSheet } from "react-native";
+import {
+  Dimensions,
+  StyleSheet,
+  Text,
+  View,
+  FlatList,
+} from "react-native";
+import EmptyInventory from "../../components/EmptyInventory";
+import { LogoutButton } from "../../components/LogoutButton";
 import TopHeader from "../../components/TopHeader";
+import { useInventoryContext } from "../../contexts/inventoryContext";
+
+const { width } = Dimensions.get('screen');
 
 const HomeScreen: React.FC = () => {
+  // const { inventory } = useInventoryContext();
+  // console.log(inventory);
+
   return (
     <View style={styles.container}>
       <TopHeader />
 
-      <Text>
-        Home Screen
-      </Text>
+      <View style={styles.topHeader}>
+        <View style={styles.topContent}>
+          <Text style={styles.io}>InventoryIO</Text>
+
+          <LogoutButton />
+        </View>
+      </View>
+
+      {/* {(inventory && inventory.length > 0) ? (
+        <Text>Inventory Items</Text>
+      ) : (
+        <EmptyInventory />
+      )} */}
 
       <StatusBar style={'auto'} backgroundColor='#6c47ff' />
     </View>
@@ -24,8 +48,28 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#fff',
     flexDirection: 'column',
-    alignItems: 'center',
-    paddingHorizontal: 20,
+    // paddingHorizontal: 20,
     paddingTop: 50,
+    position: "relative",
+  },
+  image: {
+    width: 40,
+    height: 40,
+  },
+  io: {
+    fontSize: 24,
+    marginLeft: 20,
+    fontWeight: "800",
+    color: '#FFF',
+  },
+  topHeader: {
+    position: 'absolute',
+    top: 40,
+    width: width,
+  },
+  topContent: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
   },
 });

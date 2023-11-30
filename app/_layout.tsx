@@ -17,6 +17,11 @@ import { RootSiblingParent } from "react-native-root-siblings";
 import { AuthProvider } from "../contexts/authContext";
 import { InventoryProvider } from '../contexts/inventoryContext';
 
+export {
+  // Catch any errors thrown by the Layout component.
+  ErrorBoundary,
+} from 'expo-router';
+
 export default function Layout() {
 
   const [loaded, error] = useFonts({

@@ -10,6 +10,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useAuthContext } from "./authContext";
 
 type InventoryItem = {
+  userId: string;
   name: string;
   totalStock: number;
   price: number;
@@ -30,7 +31,7 @@ type InventoryProviderProps = {
 export const InventoryContext = createContext<InventoryContextType | null>(null);
 
 export const InventoryProvider: FC<InventoryProviderProps> = ({ children }) => {
-  const authContext = useAuthContext();
+  const { user } = useAuthContext();
   const [inventory, setInventory] = useState<InventoryItem[]>([]);
 
   useEffect(() => {
@@ -39,7 +40,14 @@ export const InventoryProvider: FC<InventoryProviderProps> = ({ children }) => {
         const storedInventory = await AsyncStorage.getItem('inventory');
 
         if (storedInventory) {
-          setInventory(JSON.parse(storedInventory));
+          const parsedInventory: InventoryItem[] = JSON.parse(storedInventory);
+
+          // Filter items based on the currently logged-in user
+          const userInventory = parsedInventory.filter(
+            (item) => item.userId === user?.email
+          );
+
+          setInventory(userInventory);
         }
       } catch (error) {
         console.error("Error loading inventory ", error);
@@ -47,10 +55,15 @@ export const InventoryProvider: FC<InventoryProviderProps> = ({ children }) => {
     };
 
     loadInventory();
-  }, []);
+  }, [user]);
 
   const addInventory = async (item: InventoryItem) => {
-    const newInventory = [...inventory, item];
+    const newInventoryItem: InventoryItem = {
+      ...item,
+      userId: user?.email || '',
+    };
+
+    const newInventory = [...inventory, newInventoryItem];
     setInventory(newInventory);
     await AsyncStorage.setItem('inventory', JSON.stringify(newInventory));
   };
@@ -59,21 +72,21 @@ export const InventoryProvider: FC<InventoryProviderProps> = ({ children }) => {
     const tempInventory = [...inventory];
 
     const updatedInventory = tempInventory.map(item => {
-      return item.name === name ? newItem : item;
+      return item.name === name && item.userId === user?.email
+        ? { ...newItem, createdBy: user?.email || '' }
+        : item;
     });
     setInventory(updatedInventory);
     await AsyncStorage.setItem('inventory', JSON.stringify(updatedInventory));
   };
 
   const deleteInventory = async (name: string) => {
-    const updatedInventory = inventory.filter(item => item.name !== name);
+    const updatedInventory = inventory.filter(
+      (item) => item.name !== name && item.userId === user?.email
+    );
     setInventory(updatedInventory);
     await AsyncStorage.setItem('inventory', JSON.stringify(updatedInventory));
   };
-
-  if (!authContext.isLoggedIn) {
-    return null;
-  }
 
   const contextValue: InventoryContextType = {
     inventory,

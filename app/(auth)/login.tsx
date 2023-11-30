@@ -89,7 +89,7 @@ const LoginScreen: React.FC = () => {
           </Pressable>
         </View>
 
-        <TouchableOpacity style={styles.login} activeOpacity={0.7} onPress={handleLogin}>
+        <TouchableOpacity style={styles.login} activeOpacity={0.7} onPressIn={handleLogin}>
           <Text style={styles.textLogin}>Login</Text>
         </TouchableOpacity>
       </View>
