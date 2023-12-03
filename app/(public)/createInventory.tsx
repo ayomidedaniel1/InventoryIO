@@ -29,17 +29,21 @@ const CreateInventoryScreen: React.FC = () => {
   const [description, setDescription] = useState<string>('');
 
   const handleAddInventory = () => {
-    const payload: InventoryItem = {
-      userId: user?.email || '',
-      name: name,
-      totalStock: totalStock || 0,
-      price: price || 0,
-      description: description,
-    };
+    if (name && totalStock && price && description) {
+      const payload: InventoryItem = {
+        userId: user?.email || '',
+        name: name,
+        totalStock: totalStock || 0,
+        price: price || 0,
+        description: description,
+      };
 
-    addInventory(payload);
-    ToastAndroid.show('You have successfully added an item to your inventory', ToastAndroid.SHORT);
-    router.push('/home');
+      addInventory(payload);
+      ToastAndroid.show('You have successfully added an item to your inventory', ToastAndroid.SHORT);
+      router.push('/home');
+    } else {
+      ToastAndroid.show('You have to fill the form in order to add item to inventory', ToastAndroid.SHORT);
+    }
   };
 
   return (
