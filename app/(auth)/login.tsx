@@ -3,8 +3,7 @@ import { Image } from "expo-image";
 import { useRouter } from 'expo-router';
 import { StatusBar } from "expo-status-bar";
 import { useState } from "react";
-import { Pressable, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
-import Toast from 'react-native-root-toast';
+import { Pressable, StyleSheet, Text, TextInput, ToastAndroid, TouchableOpacity, View } from "react-native";
 import { User, useAuthContext } from "../../contexts/authContext";
 import TopHeader from "../../components/TopHeader";
 
@@ -22,11 +21,11 @@ const LoginScreen: React.FC = () => {
     if (email.includes('@') && password) {
       setEmailSet(true);
     } else {
-      Toast.show('Something went wrong');
+      ToastAndroid.show('Something went wrong', ToastAndroid.SHORT);
     }
 
     if (emailSet) {
-      Toast.show('Login successful');
+      ToastAndroid.show('Login successful', ToastAndroid.SHORT);
       login(user);
       router.push('/(public)/home');
     }

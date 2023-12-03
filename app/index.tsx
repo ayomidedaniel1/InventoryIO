@@ -2,8 +2,7 @@ import { useEffect } from "react";
 import { useRootNavigationState } from "expo-router";
 import { useRouter, useSegments } from "expo-router";
 import { useAuthContext } from "../contexts/authContext";
-import { View } from 'react-native';
-import { Apploader } from "../components/AppLoader";
+import { ActivityIndicator, View } from 'react-native';
 
 const Index = () => {
   const { isLoggedIn } = useAuthContext();
@@ -24,8 +23,10 @@ const Index = () => {
   }, [isLoggedIn, segments, navigationState?.key]);
 
   return (
-    <View>
-      {!navigationState?.key ? <Apploader /> : <></>}
+    <View style={{ flex: 1 }}>
+      {!navigationState?.key ? (
+        <ActivityIndicator size={'large'} color={'#0000ff'} />
+      ) : <></>}
     </View>
   );
 };

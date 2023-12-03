@@ -9,7 +9,7 @@ import React, {
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useAuthContext } from "./authContext";
 
-type InventoryItem = {
+export type InventoryItem = {
   userId: string;
   name: string;
   totalStock: number;
