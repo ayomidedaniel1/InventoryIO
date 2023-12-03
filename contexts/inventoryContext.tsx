@@ -82,7 +82,7 @@ export const InventoryProvider: FC<InventoryProviderProps> = ({ children }) => {
 
   const deleteInventory = async (name: string) => {
     const updatedInventory = inventory.filter(
-      (item) => item.name !== name && item.userId === user?.email
+      (inventoryItem) => inventoryItem.name !== name && inventoryItem.userId === user?.email
     );
     setInventory(updatedInventory);
     await AsyncStorage.setItem('inventory', JSON.stringify(updatedInventory));

@@ -1,27 +1,36 @@
-import { Image } from "expo-image";
+import { MaterialIcons } from '@expo/vector-icons';
+import { Link, router } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import {
   Dimensions,
-  StyleSheet,
-  Text,
-  View,
   FlatList,
   Pressable,
-  ScrollView,
+  StyleSheet,
+  Text,
+  View
 } from "react-native";
-import { MaterialIcons } from '@expo/vector-icons';
-import { Link } from "expo-router";
 
 import EmptyInventory from "../../components/EmptyInventory";
 import { LogoutButton } from "../../components/LogoutButton";
 import TopHeader from "../../components/TopHeader";
-import { useInventoryContext } from "../../contexts/inventoryContext";
+import { InventoryItem, useInventoryContext } from "../../contexts/inventoryContext";
 
 const { width } = Dimensions.get('screen');
 
 const HomeScreen: React.FC = () => {
   const { inventory } = useInventoryContext();
-  console.log(inventory);
+
+  const navigateToEditScreen = (data: InventoryItem) => {
+    router.push({
+      pathname: '/(public)/editInventory', params: {
+        userId: data.userId,
+        name: data.name,
+        price: data.price,
+        totalStock: data.totalStock,
+        description: data.description,
+      }
+    });
+  };
 
   return (
     <View style={styles.container}>
@@ -35,7 +44,7 @@ const HomeScreen: React.FC = () => {
         </View>
       </View>
 
-      <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingBottom: 100, }} style={styles.scrollview}>
+      <View style={styles.scrollview}>
         {(inventory && inventory.length > 0) && (
           <Link href={'/(public)/createInventory'} asChild>
             <Pressable style={styles.ctaAdd}>
@@ -46,11 +55,34 @@ const HomeScreen: React.FC = () => {
         )}
 
         {(inventory && inventory.length > 0) ? (
-          <Text>Inventory Items</Text>
+          <FlatList
+            alwaysBounceVertical
+            showsVerticalScrollIndicator={false}
+            data={inventory}
+            keyExtractor={(item, index) => item.name + index}
+            renderItem={({ item, index }) => (
+              <Pressable onPress={() => navigateToEditScreen(item)}>
+                <View key={item.name + index} style={styles.listBox}>
+                  <Text style={styles.listName}>{item.name}</Text>
+                  <Text style={styles.listDesc}>{item.description}</Text>
+                  <View style={styles.numbers}>
+                    <View style={styles.numbersView}>
+                      <Text style={styles.numbersTitle}>Price:</Text>
+                      <Text style={styles.listPrice}>${item.price}</Text>
+                    </View>
+                    <View style={styles.numbersView}>
+                      <Text style={styles.numbersTitle}>Total stock:</Text>
+                      <Text style={styles.listStock}>{item.totalStock}</Text>
+                    </View>
+                  </View>
+                </View>
+              </Pressable>
+            )}
+          />
         ) : (
           <EmptyInventory />
         )}
-      </ScrollView>
+      </View>
 
       <StatusBar style={'auto'} backgroundColor='#6c47ff' />
     </View>
@@ -90,6 +122,7 @@ const styles = StyleSheet.create({
   },
   scrollview: {
     paddingHorizontal: 20,
+    flex: 1,
   },
   ctaAdd: {
     width: width,
@@ -99,9 +132,60 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   ctaText: {
-    fontSize: 18,
+    fontSize: 16,
     fontWeight: '600',
     color: '#6B5E5E',
     textDecorationLine: 'underline',
+    marginRight: 3,
+  },
+  listBox: {
+    backgroundColor: '#F9F9F9',
+    borderRadius: 8,
+    padding: 16,
+    marginBottom: 16,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
+  },
+  listName: {
+    fontSize: 18,
+    fontWeight: '600',
+    color: '#333',
+    marginBottom: 18,
+  },
+  listDesc: {
+    fontSize: 16,
+    color: '#666',
+    marginBottom: 12,
+  },
+  numbersTitle: {
+    fontSize: 14,
+    fontWeight: '600',
+  },
+  listPrice: {
+    fontSize: 16,
+    fontWeight: '500',
+    color: '#4CAF50',
+  },
+  listStock: {
+    fontSize: 16,
+    fontWeight: '500',
+    color: '#2196F3',
+  },
+  numbers: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+  numbersView: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: 4,
   },
 });

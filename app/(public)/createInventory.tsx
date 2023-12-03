@@ -1,21 +1,21 @@
-import { StatusBar } from "expo-status-bar";
-import {
-  TouchableOpacity,
-  Text,
-  View,
-  StyleSheet,
-  TextInput,
-  Dimensions,
-  Pressable,
-  ToastAndroid,
-} from "react-native";
-import { useState } from "react";
 import { MaterialIcons } from '@expo/vector-icons';
 import { router } from "expo-router";
+import { StatusBar } from "expo-status-bar";
+import { useState } from "react";
+import {
+  Dimensions,
+  Pressable,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from "react-native";
+import Toast from 'react-native-simple-toast';
 
 import TopHeader from "../../components/TopHeader";
-import { InventoryItem, useInventoryContext } from "../../contexts/inventoryContext";
 import { useAuthContext } from "../../contexts/authContext";
+import { InventoryItem, useInventoryContext } from "../../contexts/inventoryContext";
 
 const { width } = Dimensions.get('screen');
 
@@ -39,10 +39,10 @@ const CreateInventoryScreen: React.FC = () => {
       };
 
       addInventory(payload);
-      ToastAndroid.show('You have successfully added an item to your inventory', ToastAndroid.SHORT);
+      Toast.show('You have successfully added an item to your inventory', Toast.SHORT);
       router.push('/home');
     } else {
-      ToastAndroid.show('You have to fill the form in order to add item to inventory', ToastAndroid.SHORT);
+      Toast.show('You have to fill the form in order to add item to inventory', Toast.SHORT);
     }
   };
 
@@ -117,7 +117,7 @@ const CreateInventoryScreen: React.FC = () => {
         </View>
 
         <TouchableOpacity style={styles.addInventory} activeOpacity={0.8} onPress={handleAddInventory}>
-          <Text style={styles.ctaText}>Login</Text>
+          <Text style={styles.ctaText}>Add Item</Text>
         </TouchableOpacity>
       </View>
 
