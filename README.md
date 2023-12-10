@@ -22,3 +22,9 @@ or
 npx run ios
 
 ```
+
+Test Specifications
+Write tests to create snapshots of each screen.
+Write tests that ensure the confirmation pop up is shown when trying to delete an existing items.
+Write tests to ensure users are taken to the edit screen after tapping on an existing item in the inventory list.
+Write CRUD tests for your async storage operations to ensure Create, Update, Delete, and Get are all called accordingly.
