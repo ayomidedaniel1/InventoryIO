@@ -102,7 +102,7 @@ const EditInventoryScreen: React.FC = () => {
             placeholder={'Your item name'}
             keyboardType="default"
             placeholderTextColor="#A6A6A6"
-            defaultValue={local.name.toString() || ''}
+            defaultValue={local?.name?.toString() || ''}
           />
         </View>
 
@@ -144,7 +144,7 @@ const EditInventoryScreen: React.FC = () => {
             placeholder={"Describe your item"}
             keyboardType="default"
             placeholderTextColor="#A6A6A6"
-            defaultValue={local.description.toString() || ''}
+            defaultValue={local?.description?.toString() || ''}
           />
         </View>
 
